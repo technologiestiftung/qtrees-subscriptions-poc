@@ -1,4 +1,4 @@
 import { QueueScheduler } from "bullmq";
-import { scheduleOptions } from "./config.js";
+import { scheduleingOptions, schedulingQueueName } from "./config.js";
 
-export const scheduler = new QueueScheduler("schedule", scheduleOptions);
+export const scheduler = new QueueScheduler(schedulingQueueName, scheduleingOptions);

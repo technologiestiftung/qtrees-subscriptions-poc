@@ -1,14 +1,14 @@
-import { scheduleQueue, treeCollectorQueue } from "./queues.js";
+import { scheduleingQueue, collectingQueue } from "./queues.js";
 import { scheduler } from "./scheduler.js";
-import { scheduleWorker, treeCollectorWorker } from "./worker.js";
+import { scheduleingWorker, collectingWorker } from "./worker.js";
 
 export async function runQueues() {
   try {
-    scheduleQueue.waitUntilReady();
-    scheduleWorker.waitUntilReady();
+    scheduleingQueue.waitUntilReady();
+    scheduleingWorker.waitUntilReady();
     scheduler.waitUntilReady();
-    treeCollectorQueue.waitUntilReady();
-    treeCollectorWorker.waitUntilReady();
+    collectingQueue.waitUntilReady();
+    collectingWorker.waitUntilReady();
 
     // const queueEvents = new QueueEvents("schedule", {...defaultOptions, prefix: "{schedule}"});
 
@@ -27,7 +27,7 @@ export async function runQueues() {
     //   console.log("queueEvents progress", jobId, data);
     // });
 
-    await scheduleQueue.add(
+    await scheduleingQueue.add(
       "schedule",
       {},
       {

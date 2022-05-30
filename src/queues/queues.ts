@@ -1,5 +1,7 @@
 import { Queue } from "bullmq";
-import { collectorOptions, scheduleOptions } from "./config.js";
+import { collectingOptions, collectingQueueName, mailingOptions, mailingQueueName, scheduleingOptions, schedulingQueueName } from "./config.js";
 
-export const scheduleQueue = new Queue("schedule", scheduleOptions);
-export const treeCollectorQueue = new Queue("collector", collectorOptions);
+export const scheduleingQueue = new Queue(schedulingQueueName, scheduleingOptions);
+export const collectingQueue = new Queue(collectingQueueName, collectingOptions);
+
+export const mailingQueue = new Queue(mailingQueueName, mailingOptions);
