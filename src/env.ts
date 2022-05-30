@@ -1,7 +1,7 @@
 import { Env } from "@humanwhocodes/env";
 const env = new Env();
 const redisURL = "redis://localhost:6379";
-const databaseURL = env.require("DATABASE_URL");
+const supabaseDatabaseURL = env.require("SUPABASE_DATABASE_URL");
 // const jwtSecret = env.require("JWT_SECRET");
 // const host = env.require("HOST");
 // const port = parseInt(env.require("PORT"), 10);
@@ -9,7 +9,7 @@ const supabaseURL = env.require("SUPABASE_URL");
 // const serviceRoleKey = env.require("SUPABASE_SERVICE_ROLE_KEY");
 const anonKey = env.require("SUPABASE_ANON_KEY");
 
-if (databaseURL === undefined) {
+if (supabaseDatabaseURL === undefined) {
   throw new Error("DATABASE_URL is not defined");
 }
 if (redisURL === undefined) {
@@ -43,5 +43,5 @@ export {
   anonKey,
   supabaseURL,
   redisURL,
-  databaseURL,
+  supabaseDatabaseURL as databaseURL,
 };
