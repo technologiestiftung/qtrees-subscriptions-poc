@@ -1,17 +1,24 @@
 import nodemailer from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
-// const nodemailer = require("nodemailer");
 
-export async function mailer(payload: Record<string, unknown>): Promise<void> {
-  const hostname = "from account page";
-  const username = "from account page";
-  const password = "from account page";
+export async function mailer(payload: {
+  userId: number;
+  email: string;
+  predictions: {
+    tree_geom: string;
+    prediction: string;
+    tree_id: string;
+  }[];
+}): Promise<void> {
+  const hostname = "localhost";
+  const username = "admin@inbucket.org";
+  const password = "123456";
 
   const transporter = nodemailer.createTransport({
     host: hostname,
-    port: 587,
-    secure: false,
-    requireTLS: true,
+    port: 2500,
+    // secure: true,
+    // requireTLS: false,
     auth: {
       user: username,
       pass: password,
@@ -19,17 +26,17 @@ export async function mailer(payload: Record<string, unknown>): Promise<void> {
     logger: true,
   });
 
-  const mails = Object.keys(payload);
-  for (const mail of mails) {
-    const mailPayload = payload[mail];
-    const mailOptions: Mail.Options = {
-      from: username,
-      to: mail,
-      subject: "",
-      text: "",
-      html: "",
-    };
 
-    await transporter.sendMail(mailOptions);
-  }
+
+  const mailPayload = payload.predictions;
+  const mailOptions: Mail.Options = {
+    from: username,
+    to: payload.email,
+    subject: "",
+    text: JSON.stringify(mailPayload),
+    html: "",
+
+  };
+  await transporter.sendMail(mailOptions);
 }
+
