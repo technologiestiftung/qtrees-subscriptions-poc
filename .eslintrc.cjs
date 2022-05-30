@@ -18,7 +18,7 @@ module.exports = {
   plugins: ["@typescript-eslint", "prettier", "jest"],
   rules: {
     indent: "off",
-    "@typescript-eslint/indent": ["error", 2],
+    // "@typescript-eslint/indent": ["error", 2],
     // indent: ["error", 2],
     "linebreak-style": ["error", "unix"],
     quotes: ["error", "double"],
