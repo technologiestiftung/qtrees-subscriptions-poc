@@ -1,10 +1,9 @@
-import { runBreeQueue } from "./queues/index.js";
+import { runQueues } from "./queues/runner.js";
 
 // runBullQueues();
 
 async function main() {
-  // await runBullMQueue();
-  runBreeQueue();
+  await runQueues();
 }
 
 main().catch((err) => {
