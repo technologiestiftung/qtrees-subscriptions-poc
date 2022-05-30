@@ -11,15 +11,15 @@ const handler = async (job: Job<Record<string, ScheduleJobReturnType[]>>) => {
     // const ids = job.data.subscriptions.map((sub) => sub.id);
     // console.log(job.name, job.data);
     for (const sub of job.data.subscriptions) {
-      const firstGeom = sub.geojson as any;
+      const geojson = sub.geojson as any;
       // console.log(firstGeom);
       const predictions = await sql`
-      SELECT
+      SELECT * FROM (SELECT
       trees.id, trees.geom AS tree_geom, pr.prediction, pr.tree_id
         FROM dummy_predictions pr
         JOIN dummy_trees trees
-        ON pr.tree_id = trees.id WHERE ST_Intersects(trees.geom, ST_GeomFromGeoJSON(${firstGeom}))`;
-      // console.info(predictions);
+        ON pr.tree_id = trees.id) as pr_trees WHERE  ST_Intersects(pr_trees.tree_geom, ST_GeomFromGeoJSON(${geojson}))`;
+      console.info(predictions);
     }
   } catch (error) {
     console.error(error);
