@@ -11,7 +11,7 @@ export async function mailer(payload: {
   }[];
 }): Promise<void> {
   const hostname = "localhost";
-  const username = "admin@inbucket.org";
+  const username = "admin";
   const password = "123456";
 
   const transporter = nodemailer.createTransport({
@@ -23,16 +23,16 @@ export async function mailer(payload: {
       user: username,
       pass: password,
     },
-    logger: true,
+    // logger: true,
   });
 
 
 
   const mailPayload = payload.predictions;
   const mailOptions: Mail.Options = {
-    from: username,
+    from: `${username}@example.com`,
     to: payload.email,
-    subject: "",
+    subject: "Hello world",
     text: JSON.stringify(mailPayload),
     html: "",
 
