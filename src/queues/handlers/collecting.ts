@@ -7,6 +7,7 @@ import { mailingQueue } from "../queues.js";
 
 // states of trees in subscriptions
 const handler = async (job: Job<Record<string, ScheduleJobReturnType[]>, any>) => {
+  // TODO: [QTREES-246] Replace Dummy query with real one that uses ML DB
   try {
     // ids should be all the same since a job is created on a user basis
     // const ids = job.data.subscriptions.map((sub) => sub.id);
@@ -27,7 +28,23 @@ const handler = async (job: Job<Record<string, ScheduleJobReturnType[]>, any>) =
        pr.tree_id
         FROM dummy_predictions pr
         JOIN dummy_trees trees
-        ON pr.tree_id = trees.id) as pr_trees WHERE  ST_Intersects(pr_trees.tree_geom, ST_GeomFromGeoJSON(${geojson}))`;
+        ON pr.tree_id = trees.id) as pr_trees WHERE ST_Intersects(pr_trees.tree_geom, ST_GeomFromGeoJSON(${geojson}))`;
+
+      // SELECT
+      // 	*
+      //   FROM (
+      //   SELECT
+      //     apit.geometry AS tree_geom,
+      //     apit.gml_id,
+      //     apif."value" as forcast,
+      //     (SELECT name from api.forecast_types as apift where apift.id = apif.type_id) as forcast_type
+      //   FROM
+      //     api.trees AS apit
+      //     LEFT JOIN api.forecast AS apif ON apit.gml_id = apif.baum_id
+      //       ) AS forecast_trees
+      //   WHERE
+      //     st_intersects(forecast_trees.tree_geom, ST_GeomFromGeoJSON(${geojson}));
+
       // console.info({ email: job.data.email, predictions });
       if (predictions.length > 0) {
         predictionsForUsers.push({ userId, email: job.data.email, predictions });

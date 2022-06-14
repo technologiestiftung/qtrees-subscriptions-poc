@@ -9,6 +9,7 @@ const supabaseURL = env.require("SUPABASE_URL");
 // const serviceRoleKey = env.require("SUPABASE_SERVICE_ROLE_KEY");
 const anonKey = env.require("SUPABASE_ANON_KEY");
 
+// TODO: [QTREES-247] Add env variables for ml db
 if (supabaseDatabaseURL === undefined) {
   throw new Error("DATABASE_URL is not defined");
 }
